@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Please Wait</title>
+</head>
+    <script>
+        localStorage.removeItem("credentials");
+        var cred = JSON.stringify(['{{ email }}','{{ role }}','{{ checkval }}'])
+        localStorage.setItem("credentials", cred)
+        window.location.href = "shop";
+    </script>
+</body>
+</html>
+
+<!-- use localstorage.stringify(obj) then localstorage.setItem('tag', obj) to store, -->
+<!-- then use localstorage.getItem('tag') then localsotrage.parse(obj from jn) to get -->

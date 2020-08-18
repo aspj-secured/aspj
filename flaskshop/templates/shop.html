@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for product in products.items %}
+        <article class="media content-section">
+          <div class="media-body">
+            <h2><a class="article-title" href="{{ url_for('product', product_id=product.id) }}">{{ product.name }}</a></h2>
+            <p class="article-content">Price:${{ '%0.2f'|format(product.price|float) }}</p>
+              {% if current_user.is_authenticated %}
+                <a class="addToCart" href="{{url_for('add_to_cart', product_id=product.id)}}" >Add To Cart</a>
+              {% endif %}
+          </div>
+        </article>
+    {% endfor %}
+    {% for page_num in products.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+      {% if page_num %}
+        {% if products.page == page_num %}
+          <a class="btn btn-info mb-4" href="{{ url_for('shop', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+          <a class="btn btn-outline-info mb-4" href="{{ url_for('shop', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+      {% else %}
+        ...
+      {% endif %}
+    {% endfor %}
+{% endblock content %}

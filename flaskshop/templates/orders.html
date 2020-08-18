@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2 class="mb-3"> Orders of {{ current_user.username }}</h2>
+    {% for order in order.items %}
+    {% if order.owner_id == current_user.id %}
+        <article class="media content-section">
+          <div class="media-body">
+            <h2><a class="article-title">Order ID:{{order.id}}</a></h2>
+            <p class="article-content">Products Ordered: {{ order.product_name }} <br> Total Cost: ${{ order.totalsum|round(2,'common') }}</p>
+          </div>
+        </article>
+    {% endif %}
+    {% endfor %}
+{% endblock content %}

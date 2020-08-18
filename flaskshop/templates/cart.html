@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2 class="mb-3"> Cart of {{ current_user.username }}</h2>
+    {% for item in cart_items.items %}
+    {% if item.owner_id == current_user.id %}
+        <article class="media content-section">
+          <div class="media-body">
+            <h2><a class="article-title">{{ item.product_name }}</a></h2>
+            <p class="article-content">Quantity to be purchased:{{ item.qty }}</p>
+              {% if current_user.is_authenticated %}
+                <a class="removeFromCart" href="{{url_for('remove_from_cart', product_id=item.product_id)}}" >Remove from Cart</a>
+              {% endif %}
+          </div>
+        </article>
+    {% endif %}
+    {% endfor %}
+        {% set count = namespace(value=0) %}
+        {% for item in cart_items.items %}
+        {% if item.owner_id == current_user.id %}
+        {% set count.value = count.value + 1 %}
+        {% endif %}
+        {% endfor %}
+      {% if (current_user.is_authenticated) and count.value != 0 %}
+        <a class="checkout" href="{{url_for('checkout')}}" >Checkout</a>
+      {% endif %}
+{% endblock content %}
